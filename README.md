@@ -17,17 +17,12 @@ Properties a todo item should have:
 App should have standard todo list with all todos.
 User should also have option to make own projects to separate out lists (create new object for each list but show all object items in main list)
 
-
-
-
-
-
-
 (Possible goal is to allow list of different app users and assign the task to one of them via a drop down).
 
 The app will also allow the user to create different projects and to group together different tasks. All of these tasks should be viewable from the main list however.
 
 Tasks to be completed today or this week should be in their own separate groupings.
+
 
 There should be a filter by owner button to see all tasks done by that individual and those outstanding
 

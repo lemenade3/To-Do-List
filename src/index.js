@@ -1,55 +1,22 @@
-let body = document.querySelector('body');
+import pageLoad from './pageLoad';
+import ToDo from './toDoConstructor';
+import {writeToDo, clearFields} from './domManipulation';
 
-let newToDo = document.createElement('button');
+pageLoad();
 
-newToDo.textContent = 'New To-Do Item'
+let toDoButton = document.querySelector('button');
+let title =  document.querySelector('#title');
+let description = document.querySelector('#description');
+let dueDate = document.querySelector('#dueDate');
+let priority = document.querySelector('#priority');
+let notes = document.querySelector('#notes');
+let done = document.querySelector('#done');
 
-let titleField = document.createElement('input')
-titleField.setAttribute('type', 'text');
 
-let descriptField = document.createElement('input')
-descriptField.setAttribute('type', 'text');
-
-let dueField = document.createElement('input')
-dueField.setAttribute('type', 'date');
-
-let priorityField = document.createElement('input')
-priorityField.setAttribute('type', 'text');
-
-let notesField = document.createElement('input')
-notesField.setAttribute('type', 'text');
-
-let doneField = document.createElement('input')
-titleField.setAttribute('type', 'text');
-
-body.append(newToDo, titleField, descriptField, dueField, priorityField, notesField, doneField);
-
-class ToDo {
-    constructor(title, description, dueDate, priority, notes, done) {
-        this.title = title,
-        this.description = description
-        this.dueDate = dueDate,
-        this.priority = priority,
-        this.notes = notes,
-        this.done = done;
-    }
-
-    logNote() {
-        console.log(this.title, this.description, this.dueDate, this.priority, this.notes, this.done)
-    }
-}
-
-newToDo.addEventListener('click', () => {
-    let item = new ToDo(titleField.value, descriptField.value, dueField.value, priorityField.value, notesField.value, doneField.value)
-    item.logNote();
-    clearFields()
+toDoButton.addEventListener('click', () => {
+    let toDo = new ToDo(title.value, description.value, dueDate.value, priority.value, notes.value, done.value);
+    toDo.logNote();
+    writeToDo(title.value, description.value, dueDate.value, priority.value, notes.value, done.value);
+    clearFields(title.value, description.value, dueDate.value, priority.value, notes.value, done.value);
 })
 
-function clearFields() {
-    titleField.value = ''
-    descriptField.value = ''
-    dueField.value = ''
-    priorityField.value = ''
-    notesField.value = ''
-    doneField.value = ''
-};
