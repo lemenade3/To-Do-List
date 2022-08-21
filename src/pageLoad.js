@@ -1,8 +1,13 @@
 function pageLoad () {
     let body = document.querySelector('body');
 
-    let makeToDo = document.createElement('button');
-    makeToDo.textContent = 'New To-Do Item'
+    // To Do Html Fields
+
+    let toDoFields = document.createElement('div');
+
+    let newToDo = document.createElement('button');
+    newToDo.textContent = 'New To-Do Item';
+    newToDo.setAttribute('id', 'newToDo')
 
     let title = document.createElement('input')
     title.setAttribute('type', 'text');
@@ -28,7 +33,27 @@ function pageLoad () {
     done.setAttribute('type', 'checkbox');
     done.setAttribute('id', 'done');
 
-    body.append(makeToDo, title, description, dueDate, priority, notes, done);
+    toDoFields.append(newToDo, title, description, dueDate, priority, notes, done);
+
+    // Project Html Fields
+
+    let projectFields = document.createElement('div');
+
+    let newProject = document.createElement('button');
+    newProject.textContent = 'New Project';
+    newProject.setAttribute('id', 'newProject');
+
+    let projectTitle = document.createElement('input');
+    projectTitle.setAttribute('type', 'text');
+    projectTitle.setAttribute('id', 'pTitle');
+
+    let projectDescription = document.createElement('input')
+    projectDescription.setAttribute('type', 'text');
+    projectDescription.setAttribute('id', 'pDescription');
+
+    projectFields.append(newProject, projectTitle, projectDescription);
+
+    body.append(toDoFields, projectFields);
 };
 
 export {pageLoad as default};

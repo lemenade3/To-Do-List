@@ -1,12 +1,10 @@
 const body = document.querySelector('body');
 
-function clearFields(title, description, dueDate, priority, notes, done) {
-    title = ''
-    description = ''
-    dueDate = ''
-    priority = ''
-    notes = ''
-    done = ''
+function clearFields() {
+    let inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+        input.value = '';
+    });
 };
 
 function writeToDo(title, description, dueDate, priority, notes, done) {
@@ -34,4 +32,18 @@ function writeToDo(title, description, dueDate, priority, notes, done) {
     body.append(toDo);
 }
 
-export {writeToDo, clearFields};
+function writeProject(title, description) {
+
+    let project = document.createElement('div');
+
+    let writeTitle = document.createElement('div');
+    writeTitle.textContent = title;
+    
+    let writeDescription = document.createElement('div');
+    writeDescription.textContent = description;
+
+    project.append(writeTitle, writeDescription);
+    body.append(project);
+}
+
+export {writeToDo, writeProject, clearFields};

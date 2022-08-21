@@ -13,4 +13,12 @@ class ToDo {
     };
 };
 
-export {ToDo as default};
+class Project {
+    constructor(title, description) {
+        this.title = title,
+        this.description = description,
+        this.list = [];
+    };
+}
+
+export {ToDo, Project};
