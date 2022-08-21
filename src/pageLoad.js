@@ -25,7 +25,7 @@ function pageLoad () {
     notes.setAttribute('id', 'notes');
 
     let done = document.createElement('input');
-    done.setAttribute('type', 'text');
+    done.setAttribute('type', 'checkbox');
     done.setAttribute('id', 'done');
 
     body.append(makeToDo, title, description, dueDate, priority, notes, done);
