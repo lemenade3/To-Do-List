@@ -3,6 +3,7 @@
 import pageLoad from './pageLoad';
 import {ToDo, Project} from './classes';
 import {writeToDo, writeProject, clearFields} from './domManipulation';
+import './style.css';
 
 // Calls initial page load
 
@@ -36,7 +37,16 @@ projectButton.addEventListener('click', () => {
 
 toDoButton.addEventListener('click', () => {
     let toDo = new ToDo(title.value, description.value, dueDate.value, priority.value, notes.value, done.value);
-    writeToDo(toDo.title, toDo.description, toDo.dueDate, toDo.priority, toDo.notes, toDo.done);
+    allToDos.list.push(toDo);
+    allToDos.writeList();
     clearFields();
-})
+});
+
+let allToDos = new Project('All Items', 'A List of All Outstanding Items');
+writeProject(allToDos.title, allToDos.description);
+
+
+
+//should be an active project to determine where new todos are assigned
+// todos need to have a project field which determines where the todo is shown
 

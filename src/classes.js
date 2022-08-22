@@ -1,3 +1,5 @@
+import { writeToDo } from "./domManipulation";
+
 class ToDo {
     constructor(title, description, dueDate, priority, notes, done) {
         this.title = title,
@@ -7,10 +9,6 @@ class ToDo {
         this.notes = notes,
         this.done = done;
     }
-
-    logNote() {
-        console.log(this.title, this.description, this.dueDate, this.priority, this.notes, this.done);
-    };
 };
 
 class Project {
@@ -19,6 +17,12 @@ class Project {
         this.description = description,
         this.list = [];
     };
-}
+
+    writeList() {
+        for (let i = 0; i < this.list.length; i++) {
+            writeToDo(this.list[i]);
+        };
+    };
+};
 
 export {ToDo, Project};

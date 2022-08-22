@@ -1,5 +1,7 @@
 const body = document.querySelector('body');
 
+//Clears all inputs
+
 function clearFields() {
     let inputs = document.querySelectorAll('input');
     inputs.forEach(input => {
@@ -7,34 +9,39 @@ function clearFields() {
     });
 };
 
-function writeToDo(title, description, dueDate, priority, notes, done) {
+function writeToDo(item) {
+    let project = document.querySelector('#test'); // Should be replaced with variable argument provided by project
+
     let toDo = document.createElement('div');
+    toDo.setAttribute('class', 'item');
 
     let writeTitle = document.createElement('div');
-    writeTitle.textContent = title;
+    writeTitle.textContent = item.title;
     
     let writeDescription = document.createElement('div');
-    writeDescription.textContent = description;
+    writeDescription.textContent = item.description;
     
     let writeDueDate = document.createElement('div');
-    writeDueDate.textContent = dueDate;
+    writeDueDate.textContent = item.dueDate;
 
     let writePriority = document.createElement('div');
-    writePriority.textContent = priority;
+    writePriority.textContent = item.priority;
     
     let writeNotes = document.createElement('div');
-    writeNotes.textContent = notes;
+    writeNotes.textContent = item.notes;
     
     let writeDone = document.createElement('div');
-    writeDone.textContent = done;
+    writeDone.textContent = item.done;
 
     toDo.append(writeTitle, writeDescription, writeDueDate, writePriority, writeNotes, writeDone);
-    body.append(toDo);
+    project.append(toDo);
 }
 
 function writeProject(title, description) {
 
     let project = document.createElement('div');
+    project.setAttribute('class', 'project')
+    project.setAttribute('id', 'test'); //should be set dynamically by project
 
     let writeTitle = document.createElement('div');
     writeTitle.textContent = title;
