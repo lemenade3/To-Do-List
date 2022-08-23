@@ -23,9 +23,30 @@ The app will also allow the user to create different projects and to group toget
 
 Tasks to be completed today or this week should be in their own separate groupings.
 
-
 There should be a filter by owner button to see all tasks done by that individual and those outstanding
 
 If task is complete and out of date remove from list
 
 if task is not complete and out of date highlight in red
+
+
+------ Notes ------
+
+Page load carries out initial page load
+File to construct new todos
+Dom manipulator file to show new todos as they are made
+File to edit todo’s after creation (change priority, properties, assigned project etc.
+File to move todo’s from one project to another based on state changes
+
+rename todoconstructor to classes 
+create new projects class
+projects should act as an array for the todos
+intial project should be hardcoded in index and all todos shown in it.
+
+initial project should loop through every todo and show it.
+
+other projects should have todos created within them and added to the project.list at that point
+
+there should be tab switching logic that pulls the required .list up and displays all items within it.
+
+

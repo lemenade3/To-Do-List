@@ -9,8 +9,28 @@ function clearFields() {
     });
 };
 
-function writeToDo(item) {
-    let project = document.querySelector('#test'); // Should be replaced with variable argument provided by project
+// Writes a project
+
+function writeProject(item) {
+
+    let project = document.createElement('div');
+    project.setAttribute('class', 'project');
+    project.setAttribute('id', item.id);
+
+    let writeTitle = document.createElement('div');
+    writeTitle.textContent = item.title;
+    
+    let writeDescription = document.createElement('div');
+    writeDescription.textContent = item.description;
+
+    project.append(writeTitle, writeDescription);
+    body.append(project);
+}
+
+// Writes a To Do
+
+function writeToDo(item, id) {
+    let project = document.querySelector(id);
 
     let toDo = document.createElement('div');
     toDo.setAttribute('class', 'item');
@@ -37,20 +57,5 @@ function writeToDo(item) {
     project.append(toDo);
 }
 
-function writeProject(title, description) {
-
-    let project = document.createElement('div');
-    project.setAttribute('class', 'project')
-    project.setAttribute('id', 'test'); //should be set dynamically by project
-
-    let writeTitle = document.createElement('div');
-    writeTitle.textContent = title;
-    
-    let writeDescription = document.createElement('div');
-    writeDescription.textContent = description;
-
-    project.append(writeTitle, writeDescription);
-    body.append(project);
-}
 
 export {writeToDo, writeProject, clearFields};

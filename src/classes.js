@@ -16,11 +16,13 @@ class Project {
         this.title = title,
         this.description = description,
         this.list = [];
+        this.id = title.split(' ').join('');
     };
 
     writeList() {
         for (let i = 0; i < this.list.length; i++) {
-            writeToDo(this.list[i]);
+            writeToDo(this.list[i], `#${this.id}`);
+
         };
     };
 };

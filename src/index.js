@@ -2,7 +2,7 @@
 
 import pageLoad from './pageLoad';
 import {ToDo, Project} from './classes';
-import {writeToDo, writeProject, clearFields} from './domManipulation';
+import {writeProject, clearFields} from './domManipulation';
 import './style.css';
 
 // Calls initial page load
@@ -25,11 +25,18 @@ let projectButton = document.querySelector('#newProject');
 let projectTitle = document.querySelector('#pTitle');
 let projectDescription = document.querySelector('#pDescription');
 
+let allToDos = new Project('All Items', 'A List of All Outstanding Items');
+writeProject(allToDos);
+
+// Stores the active project, this should be put somewhere better once the app is working fully
+let activeProject;
+
 // Button creates new Project
 
 projectButton.addEventListener('click', () => {
     let project = new Project(projectTitle.value, projectDescription.value)
-    writeProject(project.title, project.description)
+    writeProject(project)
+    activeProject = project;
     clearFields();
 })
 
@@ -39,14 +46,13 @@ toDoButton.addEventListener('click', () => {
     let toDo = new ToDo(title.value, description.value, dueDate.value, priority.value, notes.value, done.value);
     allToDos.list.push(toDo);
     allToDos.writeList();
+    if (activeProject != undefined) {
+        activeProject.list.push(toDo);
+        activeProject.writeList();
+        console.log(activeProject.list)
+        console.log(allToDos.list)
+    }
     clearFields();
 });
 
-let allToDos = new Project('All Items', 'A List of All Outstanding Items');
-writeProject(allToDos.title, allToDos.description);
-
-
-
-//should be an active project to determine where new todos are assigned
 // todos need to have a project field which determines where the todo is shown
-
