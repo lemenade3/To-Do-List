@@ -44,9 +44,11 @@ projectButton.addEventListener('click', () => {
 
 toDoButton.addEventListener('click', () => {
     let toDo = new ToDo(title.value, description.value, dueDate.value, priority.value, notes.value, done.value);
+    document.querySelector(`#${allToDos.id}`).innerHTML = '';
     allToDos.list.push(toDo);
     allToDos.writeList();
     if (activeProject != undefined) {
+        document.querySelector(`#${activeProject.id}`).innerHTML = '';
         activeProject.list.push(toDo);
         activeProject.writeList();
         console.log(activeProject.list)

@@ -15,7 +15,9 @@ function writeProject(item) {
 
     let project = document.createElement('div');
     project.setAttribute('class', 'project');
-    project.setAttribute('id', item.id);
+
+    let container = document.createElement('div');
+    container.setAttribute('id', item.id)
 
     let writeTitle = document.createElement('div');
     writeTitle.textContent = item.title;
@@ -23,7 +25,7 @@ function writeProject(item) {
     let writeDescription = document.createElement('div');
     writeDescription.textContent = item.description;
 
-    project.append(writeTitle, writeDescription);
+    project.append(writeTitle, writeDescription, container);
     body.append(project);
 }
 
