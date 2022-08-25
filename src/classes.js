@@ -19,9 +19,9 @@ class Project {
         this.id = title.split(' ').join('');
     };
 
-    writeList() {
+    writeList() { // This should probably sit in dom manipulation
         for (let i = 0; i < this.list.length; i++) {
-            writeToDo(this.list[i], `#${this.id}`);
+            writeToDo(this.list[i]);
 
         };
     };

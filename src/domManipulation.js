@@ -1,3 +1,5 @@
+import { activeProject } from "./projectController";
+
 const body = document.querySelector('body');
 
 //Clears all inputs
@@ -31,8 +33,8 @@ function writeProject(item) {
 
 // Writes a To Do
 
-function writeToDo(item, id) {
-    let project = document.querySelector(id);
+function writeToDo(item) {
+    let project = document.querySelector(`#${activeProject.id}`);
 
     let toDo = document.createElement('div');
     toDo.setAttribute('class', 'item');
@@ -59,5 +61,9 @@ function writeToDo(item, id) {
     project.append(toDo);
 }
 
+function clearList() {
+    document.querySelector(`#${activeProject.id}`).innerHTML = '';
+}
 
-export {writeToDo, writeProject, clearFields};
+
+export {writeToDo, writeProject, clearFields, clearList};

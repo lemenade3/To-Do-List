@@ -2,8 +2,9 @@
 
 import pageLoad from './pageLoad';
 import {ToDo, Project} from './classes';
-import {writeProject, clearFields} from './domManipulation';
+import {writeProject, clearFields, clearList} from './domManipulation';
 import './style.css';
+import {makeActive, activeProject} from './projectController';
 
 // Calls initial page load
 
@@ -25,36 +26,52 @@ let projectButton = document.querySelector('#newProject');
 let projectTitle = document.querySelector('#pTitle');
 let projectDescription = document.querySelector('#pDescription');
 
-let allToDos = new Project('All Items', 'A List of All Outstanding Items');
-writeProject(allToDos);
+let projectList = []
 
-// Stores the active project, this should be put somewhere better once the app is working fully
-let activeProject;
+// Creates Default Project
+
+let defaultProject = new Project('All Items', 'A List of All Outstanding Items');
+writeProject(defaultProject);
+makeActive(defaultProject)
+projectList.push(defaultProject);
 
 // Button creates new Project
 
 projectButton.addEventListener('click', () => {
     let project = new Project(projectTitle.value, projectDescription.value)
     writeProject(project)
-    activeProject = project;
+    makeActive(project);
     clearFields();
+    projectList.push(project);
+    changeProject()
 })
+
+// Move the below to projectController
+
+function changeProject() {
+    let projects = document.querySelectorAll('.project')
+    projects.forEach(project => {
+        project.addEventListener('click', () => {
+            clearList()
+            for (let i = 0; i < projectList.length; i++) {
+                if (project.lastChild.id === projectList[i].id) {
+                    makeActive(projectList[i])
+                    activeProject.writeList();
+                }
+            }
+        })
+    })
+}
 
 //Button creates new ToDo
 
 toDoButton.addEventListener('click', () => {
     let toDo = new ToDo(title.value, description.value, dueDate.value, priority.value, notes.value, done.value);
-    document.querySelector(`#${allToDos.id}`).innerHTML = '';
-    allToDos.list.push(toDo);
-    allToDos.writeList();
-    if (activeProject != undefined) {
-        document.querySelector(`#${activeProject.id}`).innerHTML = '';
-        activeProject.list.push(toDo);
-        activeProject.writeList();
-        console.log(activeProject.list)
-        console.log(allToDos.list)
-    }
+    clearList()
+    activeProject.list.push(toDo);
+    activeProject.writeList();
+    if (activeProject != defaultProject) { // This line should also be within projectswitcher
+        defaultProject.list.push(toDo);
+    };
     clearFields();
 });
-
-// todos need to have a project field which determines where the todo is shown
