@@ -50,3 +50,4 @@ other projects should have todos created within them and added to the project.li
 there should be tab switching logic that pulls the required .list up and displays all items within it.
 
 
+Possibly change entire app logic, most functions should be contained within the classes of projects and todos, keep dom manipulation separate though.

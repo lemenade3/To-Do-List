@@ -11,15 +11,23 @@ function clearFields() {
     });
 };
 
+function clearList() {
+    document.querySelector(`#${activeProject.id}container`).innerHTML = ''; // something is going wrong with this function that breaks the app
+}
+
 // Writes a project
 
 function writeProject(item) {
 
     let project = document.createElement('div');
     project.setAttribute('class', 'project');
+    project.setAttribute('id', item.id)
+    project.addEventListener('click', () => {
+        // event listener needs to call class method to change active project then hide and show todos accordingly
+    });
 
     let container = document.createElement('div');
-    container.setAttribute('id', item.id)
+    container.setAttribute('id', `${item.id}container`)
 
     let writeTitle = document.createElement('div');
     writeTitle.textContent = item.title;
@@ -27,14 +35,22 @@ function writeProject(item) {
     let writeDescription = document.createElement('div');
     writeDescription.textContent = item.description;
 
-    project.append(writeTitle, writeDescription, container);
+    let deleteButton = document.createElement('button')
+    deleteButton.textContent = 'Delete Project'
+    deleteButton.setAttribute('id', `deleteProject${item.id}`)
+    deleteButton.addEventListener('click', () => {
+        project.remove();
+        item.deleteProject()
+    })
+
+    project.append(writeTitle, writeDescription, container, deleteButton);
     body.append(project);
 }
 
 // Writes a To Do
 
 function writeToDo(item) {
-    let project = document.querySelector(`#${activeProject.id}`);
+    let container = document.querySelector(`#${activeProject.id}container`);
 
     let toDo = document.createElement('div');
     toDo.setAttribute('class', 'item');
@@ -58,11 +74,7 @@ function writeToDo(item) {
     writeDone.textContent = item.done;
 
     toDo.append(writeTitle, writeDescription, writeDueDate, writePriority, writeNotes, writeDone);
-    project.append(toDo);
-}
-
-function clearList() {
-    document.querySelector(`#${activeProject.id}`).innerHTML = '';
+    container.append(toDo);
 }
 
 

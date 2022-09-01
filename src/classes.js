@@ -1,4 +1,5 @@
 import { writeToDo } from "./domManipulation";
+import {activeProject} from './projectController'
 
 class ToDo {
     constructor(title, description, dueDate, priority, notes, done) {
@@ -19,12 +20,19 @@ class Project {
         this.id = title.split(' ').join('');
     };
 
-    writeList() { // This should probably sit in dom manipulation
+    writeList() { // This should probably sit in dom manipulation or index
         for (let i = 0; i < this.list.length; i++) {
-            writeToDo(this.list[i]);
-
+            writeToDo(this.list[i], `#${this.id}`);
         };
     };
+
+    deleteProject() {
+        delete window[Project]
+    };
+
+    makeActive() {
+        activeProject = Project // Currently broken
+    }
 };
 
 export {ToDo, Project};

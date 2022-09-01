@@ -1,9 +1,12 @@
+import {writeProject} from './domManipulation'
+import {Project} from './classes'
+
 let activeProject;
 
-function makeActive(project) {
+function makeProject(title, description) {
+    let project = new Project(title, description)
+    writeProject(project)
     activeProject = project;
 }
 
-
-
-export {makeActive, activeProject};
+export {makeProject, activeProject};

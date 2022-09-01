@@ -2,9 +2,9 @@
 
 import pageLoad from './pageLoad';
 import {ToDo, Project} from './classes';
-import {writeProject, clearFields, clearList} from './domManipulation';
+import {clearFields, clearList} from './domManipulation';
 import './style.css';
-import {makeActive, activeProject} from './projectController';
+import {makeProject, activeProject} from './projectController';
 
 // Calls initial page load
 
@@ -26,42 +26,12 @@ let projectButton = document.querySelector('#newProject');
 let projectTitle = document.querySelector('#pTitle');
 let projectDescription = document.querySelector('#pDescription');
 
-let projectList = []
-
-// Creates Default Project
-
-let defaultProject = new Project('All Items', 'A List of All Outstanding Items');
-writeProject(defaultProject);
-makeActive(defaultProject)
-projectList.push(defaultProject);
-
-// Button creates new Project
+// Button creates new Project and clears inputs
 
 projectButton.addEventListener('click', () => {
-    let project = new Project(projectTitle.value, projectDescription.value)
-    writeProject(project)
-    makeActive(project);
+    makeProject(projectTitle.value, projectDescription.value);
     clearFields();
-    projectList.push(project);
-    changeProject()
-})
-
-// Move the below to projectController
-
-function changeProject() {
-    let projects = document.querySelectorAll('.project')
-    projects.forEach(project => {
-        project.addEventListener('click', () => {
-            clearList()
-            for (let i = 0; i < projectList.length; i++) {
-                if (project.lastChild.id === projectList[i].id) {
-                    makeActive(projectList[i])
-                    activeProject.writeList();
-                }
-            }
-        })
-    })
-}
+});
 
 //Button creates new ToDo
 
@@ -70,8 +40,5 @@ toDoButton.addEventListener('click', () => {
     clearList()
     activeProject.list.push(toDo);
     activeProject.writeList();
-    if (activeProject != defaultProject) { // This line should also be within projectswitcher
-        defaultProject.list.push(toDo);
-    };
     clearFields();
-});
+}); // This button requies refactoring, most of this should be moved into todo class
