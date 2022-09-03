@@ -17,6 +17,11 @@ class ToDo {
 
     deleteToDo() {
         delete window[ToDo];
+        for (let i = 0; i < toDoList.length; i++) {
+            if (toDoList[i] === this) {
+                toDoList.splice(i, 1)
+            };
+        };
     };
 };
 
