@@ -44,7 +44,6 @@ function writeProject(project) {
 
     let deleteButton = document.createElement('button')
     deleteButton.textContent = 'Delete Project'
-    deleteButton.setAttribute('id', `deleteProject${project.id}`)
     deleteButton.addEventListener('click', () => {
         projectDiv.remove();
         project.deleteProject()
@@ -80,7 +79,15 @@ function writeToDo(project, toDo) {
     let writeDone = document.createElement('div');
     writeDone.textContent = toDo.done;
 
-    toDoDiv.append(writeTitle, writeDescription, writeDueDate, writePriority, writeNotes, writeDone);
+    let deleteButton = document.createElement('button')
+    deleteButton.textContent = 'Delete ToDo'
+    deleteButton.addEventListener('click', () => {
+        event.stopPropagation();
+        toDo.deleteToDo()
+        toDoDiv.remove();
+    })
+
+    toDoDiv.append(writeTitle, writeDescription, writeDueDate, writePriority, writeNotes, writeDone, deleteButton);
     container.append(toDoDiv);
 }
 

@@ -6,7 +6,11 @@ class ToDo {
         this.priority = priority,
         this.notes = notes,
         this.done = done;
-    }
+    };
+
+    deleteToDo() {
+        delete window[ToDo]
+    };
 };
 
 export {ToDo as default};
