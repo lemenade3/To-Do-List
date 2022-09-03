@@ -1,13 +1,15 @@
-import { writeToDo } from "./domManipulation";
+import {writeToDo, domToDoFields} from "./domManipulation";
 import {toDoList} from './toDos'
-
-let activeProject;
 
 class Project {
     constructor(title, description) {
         this.title = title,
         this.description = description,
         this.id = title.split(' ').join('');
+    };
+
+    writeFields() {
+        domToDoFields(this);
     };
 
     writeList() {
@@ -22,9 +24,6 @@ class Project {
         delete window[Project]
     };
 
-    makeActive() {
-        activeProject = this
-    }
 };
 
-export {Project, activeProject};
+export {Project};

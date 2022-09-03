@@ -51,3 +51,7 @@ there should be tab switching logic that pulls the required .list up and display
 
 
 Possibly change entire app logic, most functions should be contained within the classes of projects and todos, keep dom manipulation separate though.
+
+----------
+
+write todo fields should be method in project class, should call dom functions that passes project as the argument. project is then passed to toDo to remove need of activeProject.

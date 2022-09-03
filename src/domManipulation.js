@@ -1,3 +1,4 @@
+import {ToDo} from './toDos'
 
 const body = document.querySelector('body');
 
@@ -28,13 +29,16 @@ function writeProject(project) {
     projectDiv.setAttribute('id', project.id)
     projectDiv.addEventListener('click', () => {
         clearList();
-        project.makeActive()
         project.writeList();
+        project.writeFields();
     });
 
     let container = document.createElement('div');
     container.setAttribute('id', `${project.id}container`)
     container.setAttribute('class', 'container')
+    container.addEventListener('click', () => {
+        event.stopPropagation();
+    })
 
     let writeTitle = document.createElement('div');
     writeTitle.textContent = project.title;
@@ -51,7 +55,58 @@ function writeProject(project) {
 
     projectDiv.append(writeTitle, writeDescription, container, deleteButton);
     body.append(projectDiv);
+    domToDoFields(project);
 }
+
+function domToDoFields(project) {
+     // To Do Html Fields
+
+     let toDoFields = document.createElement('div');
+
+     //Button creates new ToDo
+
+     let newToDo = document.createElement('button');
+     newToDo.textContent = 'New To-Do Item';
+     newToDo.setAttribute('class', 'newToDo')
+ 
+     let title = document.createElement('input')
+     title.setAttribute('type', 'text');
+     title.setAttribute('id', 'title');
+ 
+     let description = document.createElement('input')
+     description.setAttribute('type', 'text');
+     description.setAttribute('id', 'description');
+ 
+     let dueDate = document.createElement('input');
+     dueDate.setAttribute('type', 'date');
+     dueDate.setAttribute('id', 'dueDate');
+ 
+     let priority = document.createElement('input');
+     priority.setAttribute('type', 'text');
+     priority.setAttribute('id', 'priority');
+ 
+     let notes = document.createElement('input');
+     notes.setAttribute('type', 'text');
+     notes.setAttribute('id', 'notes');
+ 
+     let done = document.createElement('input');
+     done.setAttribute('type', 'text');
+     done.setAttribute('id', 'done');
+
+     newToDo.addEventListener('click', () => {
+        let toDo = new ToDo(title.value, description.value, dueDate.value, priority.value, notes.value, done.value, project);
+        clearList()
+        toDo.addToList()
+        toDo.project.writeList();
+        toDo.project.writeFields();
+        clearFields();
+    });
+ 
+    toDoFields.append(newToDo, title, description, dueDate, priority, notes, done);
+
+    let container = document.querySelector(`#${project.id}container`)
+    container.append(toDoFields);
+};
 
 // Writes a To Do
 
@@ -92,4 +147,4 @@ function writeToDo(toDo) {
 }
 
 
-export {writeToDo, writeProject, clearFields, clearList};
+export {writeToDo, writeProject, clearFields, clearList, domToDoFields};
