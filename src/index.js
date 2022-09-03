@@ -2,7 +2,7 @@
 
 import pageLoad from './pageLoad';
 import {Project, activeProject} from './projects';
-import ToDo from './toDos'
+import {ToDo} from './toDos'
 import {clearFields, clearList, writeProject} from './domManipulation';
 import './style.css';
 
@@ -39,9 +39,9 @@ projectButton.addEventListener('click', () => {
 //Button creates new ToDo
 
 toDoButton.addEventListener('click', () => {
-    let toDo = new ToDo(title.value, description.value, dueDate.value, priority.value, notes.value, done.value);
+    let toDo = new ToDo(title.value, description.value, dueDate.value, priority.value, notes.value, done.value, activeProject);
     clearList()
-    activeProject.list.push(toDo);
+    toDo.addToList()
     activeProject.writeList();
     clearFields();
-}); // This button requies refactoring, most of this should be moved into todo class
+});

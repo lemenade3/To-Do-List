@@ -55,8 +55,8 @@ function writeProject(project) {
 
 // Writes a To Do
 
-function writeToDo(project, toDo) {
-    let container = document.querySelector(`#${project.id}container`);
+function writeToDo(toDo) {
+    let container = document.querySelector(`#${toDo.project.id}container`);
 
     let toDoDiv = document.createElement('div');
     toDoDiv.setAttribute('class', 'toDo');

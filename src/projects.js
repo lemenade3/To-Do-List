@@ -1,15 +1,5 @@
 import { writeToDo } from "./domManipulation";
-
-class ToDo {
-    constructor(title, description, dueDate, priority, notes, done) {
-        this.title = title,
-        this.description = description
-        this.dueDate = dueDate,
-        this.priority = priority,
-        this.notes = notes,
-        this.done = done;
-    }
-};
+import {toDoList} from './toDos'
 
 let activeProject;
 
@@ -22,8 +12,10 @@ class Project {
     };
 
     writeList() {
-        for (let i = 0; i < this.list.length; i++) {
-            writeToDo(this, this.list[i]);
+        for (let i = 0; i < toDoList.length; i++) {
+            if (toDoList[i].project === this) {
+                writeToDo(toDoList[i])
+            }
         };
     };
 
@@ -36,4 +28,4 @@ class Project {
     }
 };
 
-export {ToDo, Project, activeProject};
+export {Project, activeProject};
