@@ -1,7 +1,8 @@
 // Imports from various modules
 
 import pageLoad from './pageLoad';
-import {ToDo, Project, activeProject} from './classes';
+import {Project, activeProject} from './projects';
+import ToDo from './toDos'
 import {clearFields, clearList, writeProject} from './domManipulation';
 import './style.css';
 

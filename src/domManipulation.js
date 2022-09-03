@@ -46,7 +46,7 @@ function writeProject(project) {
     deleteButton.textContent = 'Delete Project'
     deleteButton.setAttribute('id', `deleteProject${project.id}`)
     deleteButton.addEventListener('click', () => {
-        project.remove();
+        projectDiv.remove();
         project.deleteProject()
     })
 
