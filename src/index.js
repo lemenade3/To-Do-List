@@ -1,10 +1,9 @@
 // Imports from various modules
 
 import pageLoad from './pageLoad';
-import {ToDo, Project} from './classes';
-import {clearFields, clearList} from './domManipulation';
+import {ToDo, Project, activeProject} from './classes';
+import {clearFields, clearList, writeProject} from './domManipulation';
 import './style.css';
-import {makeProject, activeProject} from './projectController';
 
 // Calls initial page load
 
@@ -29,8 +28,11 @@ let projectDescription = document.querySelector('#pDescription');
 // Button creates new Project and clears inputs
 
 projectButton.addEventListener('click', () => {
-    makeProject(projectTitle.value, projectDescription.value);
+    let project = new Project(projectTitle.value, projectDescription.value);
+    clearList();
     clearFields();
+    writeProject(project)
+    project.makeActive();
 });
 
 //Button creates new ToDo

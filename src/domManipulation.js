@@ -1,4 +1,3 @@
-import { activeProject } from "./projectController";
 
 const body = document.querySelector('body');
 
@@ -11,70 +10,78 @@ function clearFields() {
     });
 };
 
+// Clears Project containers
+
 function clearList() {
-    document.querySelector(`#${activeProject.id}container`).innerHTML = ''; // something is going wrong with this function that breaks the app
-}
+    let containers = document.querySelectorAll(`.container`);
+    for (let i = 0; i < containers.length; i++) {
+        containers[i].innerHTML = '';
+    };
+};
 
 // Writes a project
 
-function writeProject(item) {
+function writeProject(project) {
 
-    let project = document.createElement('div');
-    project.setAttribute('class', 'project');
-    project.setAttribute('id', item.id)
-    project.addEventListener('click', () => {
-        // event listener needs to call class method to change active project then hide and show todos accordingly
+    let projectDiv = document.createElement('div');
+    projectDiv.setAttribute('class', 'project');
+    projectDiv.setAttribute('id', project.id)
+    projectDiv.addEventListener('click', () => {
+        clearList();
+        project.makeActive()
+        project.writeList();
     });
 
     let container = document.createElement('div');
-    container.setAttribute('id', `${item.id}container`)
+    container.setAttribute('id', `${project.id}container`)
+    container.setAttribute('class', 'container')
 
     let writeTitle = document.createElement('div');
-    writeTitle.textContent = item.title;
+    writeTitle.textContent = project.title;
     
     let writeDescription = document.createElement('div');
-    writeDescription.textContent = item.description;
+    writeDescription.textContent = project.description;
 
     let deleteButton = document.createElement('button')
     deleteButton.textContent = 'Delete Project'
-    deleteButton.setAttribute('id', `deleteProject${item.id}`)
+    deleteButton.setAttribute('id', `deleteProject${project.id}`)
     deleteButton.addEventListener('click', () => {
         project.remove();
-        item.deleteProject()
+        project.deleteProject()
     })
 
-    project.append(writeTitle, writeDescription, container, deleteButton);
-    body.append(project);
+    projectDiv.append(writeTitle, writeDescription, container, deleteButton);
+    body.append(projectDiv);
 }
 
 // Writes a To Do
 
-function writeToDo(item) {
-    let container = document.querySelector(`#${activeProject.id}container`);
+function writeToDo(project, toDo) {
+    let container = document.querySelector(`#${project.id}container`);
 
-    let toDo = document.createElement('div');
-    toDo.setAttribute('class', 'item');
+    let toDoDiv = document.createElement('div');
+    toDoDiv.setAttribute('class', 'toDo');
 
     let writeTitle = document.createElement('div');
-    writeTitle.textContent = item.title;
+    writeTitle.textContent = toDo.title;
     
     let writeDescription = document.createElement('div');
-    writeDescription.textContent = item.description;
+    writeDescription.textContent = toDo.description;
     
     let writeDueDate = document.createElement('div');
-    writeDueDate.textContent = item.dueDate;
+    writeDueDate.textContent = toDo.dueDate;
 
     let writePriority = document.createElement('div');
-    writePriority.textContent = item.priority;
+    writePriority.textContent = toDo.priority;
     
     let writeNotes = document.createElement('div');
-    writeNotes.textContent = item.notes;
+    writeNotes.textContent = toDo.notes;
     
     let writeDone = document.createElement('div');
-    writeDone.textContent = item.done;
+    writeDone.textContent = toDo.done;
 
-    toDo.append(writeTitle, writeDescription, writeDueDate, writePriority, writeNotes, writeDone);
-    container.append(toDo);
+    toDoDiv.append(writeTitle, writeDescription, writeDueDate, writePriority, writeNotes, writeDone);
+    container.append(toDoDiv);
 }
 
 
