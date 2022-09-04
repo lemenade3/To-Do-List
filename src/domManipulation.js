@@ -24,6 +24,8 @@ function clearList() {
 
 function writeProject(project) {
 
+    const sidebar = document.querySelector('#sidebar');
+
     let projectDiv = document.createElement('div');
     projectDiv.setAttribute('class', 'project');
     projectDiv.setAttribute('id', project.id)
@@ -54,7 +56,8 @@ function writeProject(project) {
     })
 
     projectDiv.append(writeTitle, writeDescription, container, deleteButton);
-    body.append(projectDiv);
+    console.log(sidebar)
+    sidebar.append(projectDiv);
     domToDoFields(project);
 }
 
@@ -111,7 +114,7 @@ function domToDoFields(project) {
 // Writes a To Do
 
 function writeToDo(toDo) {
-    let container = document.querySelector(`#${toDo.project.id}container`);
+    let container = document.querySelector(`#main`);
 
     let toDoDiv = document.createElement('div');
     toDoDiv.setAttribute('class', 'toDo');

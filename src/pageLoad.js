@@ -1,6 +1,19 @@
 function pageLoad () {
     let body = document.querySelector('body');
 
+    let header = document.createElement('header');
+
+    let centre = document.createElement('div');
+    centre.setAttribute('id', 'centre');
+
+    let sidebar = document.createElement('div');
+    sidebar.setAttribute('id', 'sidebar');
+
+    let main = document.createElement('div');
+    main.setAttribute('id', 'main');
+    
+    let footer = document.createElement('footer');
+
     // Project Html Fields
 
     let projectFields = document.createElement('div');
@@ -19,7 +32,9 @@ function pageLoad () {
 
     projectFields.append(newProject, projectTitle, projectDescription);
 
-    body.append(projectFields);
+    header.append(projectFields)
+    centre.append(sidebar, main);
+    body.append(header, centre, footer);
 };
 
 export {pageLoad as default};
