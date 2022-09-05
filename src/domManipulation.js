@@ -1,7 +1,5 @@
 import {ToDo} from './toDos'
 
-const body = document.querySelector('body');
-
 //Clears all inputs
 
 function clearFields() {
@@ -14,10 +12,8 @@ function clearFields() {
 // Clears Project containers
 
 function clearList() {
-    let containers = document.querySelectorAll(`.container`);
-    for (let i = 0; i < containers.length; i++) {
-        containers[i].innerHTML = '';
-    };
+    let container = document.querySelector(`#main`);
+    container.innerHTML = ''
 };
 
 // Writes a project
@@ -35,13 +31,6 @@ function writeProject(project) {
         project.writeFields();
     });
 
-    let container = document.createElement('div');
-    container.setAttribute('id', `${project.id}container`)
-    container.setAttribute('class', 'container')
-    container.addEventListener('click', () => {
-        event.stopPropagation();
-    })
-
     let writeTitle = document.createElement('div');
     writeTitle.textContent = project.title;
     
@@ -51,12 +40,13 @@ function writeProject(project) {
     let deleteButton = document.createElement('button')
     deleteButton.textContent = 'Delete Project'
     deleteButton.addEventListener('click', () => {
+        event.stopPropagation()
         projectDiv.remove();
         project.deleteProject()
+        clearList();
     })
 
-    projectDiv.append(writeTitle, writeDescription, container, deleteButton);
-    console.log(sidebar)
+    projectDiv.append(writeTitle, writeDescription, deleteButton);
     sidebar.append(projectDiv);
     domToDoFields(project);
 }
@@ -107,7 +97,7 @@ function domToDoFields(project) {
  
     toDoFields.append(newToDo, title, description, dueDate, priority, notes, done);
 
-    let container = document.querySelector(`#${project.id}container`)
+    let container = document.querySelector(`#main`)
     container.append(toDoFields);
 };
 
