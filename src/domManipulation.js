@@ -1,4 +1,5 @@
 import {ToDo} from './toDos'
+import {loadProjectFields} from './pageLoad'
 
 //Clears all inputs
 
@@ -21,6 +22,7 @@ function clearList() {
 function writeProject(project) {
 
     const sidebar = document.querySelector('#sidebar');
+    let projectFields = document.querySelector('#projectFields')
 
     let projectDiv = document.createElement('div');
     projectDiv.setAttribute('class', 'project');
@@ -46,9 +48,11 @@ function writeProject(project) {
         clearList();
     })
 
+    projectFields.remove();
     projectDiv.append(writeTitle, writeDescription, deleteButton);
     sidebar.append(projectDiv);
     domToDoFields(project);
+    loadProjectFields();
 }
 
 function domToDoFields(project) {
