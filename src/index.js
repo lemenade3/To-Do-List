@@ -1,14 +1,17 @@
 // Imports from various modules
 
 import {pageLoad} from './pageLoad';
+import { writeInbox } from './domManipulation';
 import './style.css';
+import { Inbox } from './projects';
 
 // Calls initial page load
 
 pageLoad();
 
-// Query Selectors for the Project Inputs
+// Creates the inbox project
 
-// Button creates new Project and clears inputs
+let inbox = new Inbox('Inbox', 'All of your outstanding tasks are stored here');
+writeInbox(inbox)
 
 

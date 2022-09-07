@@ -5,30 +5,37 @@ body {
 
 header {
     height: 80px;
-    background-color: rgb(110, 110, 211);
+    background-color: #388087;
 }
 
 #centre {
     display: flex;
     height: 100%;
+    background-color: #F6F6F2;
 }
 
 #sidebar {
     width: 350px;
-    background-color: rgb(211, 211, 211);
+    background-color: #BADFE7;
     height: calc(100vh - 100px);
 }
 
 footer {
     height: 20px;
-    background-color: rgb(110, 110, 211)
+    background-color: #388087
 }
 
 .toDo {
-    background-color: red;
+    background-color: #dedecd;
+    display: flex;
 }
 
 .project {
-    background-color: aquamarine;
+    background-color: #93bcc6;;
     padding: 20px;
+    border-width: 2px;
+}
+
+.project:hover {
+    background-color: #76979f;
 }

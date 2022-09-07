@@ -1,13 +1,13 @@
 let toDoList = [];
 
 class ToDo {
-    constructor(title, description, dueDate, priority, notes, done, project) {
+    constructor(title, description, dueDate, priority, project) {
         this.title = title,
         this.description = description
         this.dueDate = dueDate,
         this.priority = priority,
-        this.notes = notes,
-        this.done = done,
+        this.notes = '',
+        this.done = false,
         this.project = project;
     };
 

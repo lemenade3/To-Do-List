@@ -1,4 +1,4 @@
-import {writeToDo, domToDoFields} from "./domManipulation";
+import {writeToDo, writeToDoButton, writeHeaders} from "./domManipulation";
 import {toDoList} from './toDos'
 
 class Project {
@@ -9,10 +9,11 @@ class Project {
     };
 
     writeFields() {
-        domToDoFields(this);
+        writeToDoButton(this);
     };
 
     writeList() {
+        writeHeaders(this)
         for (let i = 0; i < toDoList.length; i++) {
             if (toDoList[i].project === this) {
                 writeToDo(toDoList[i])
@@ -26,4 +27,13 @@ class Project {
 
 };
 
-export {Project};
+class Inbox extends Project {
+    writeList() {
+        writeHeaders(this)
+        for (let i = 0; i < toDoList.length; i++) {
+            writeToDo(toDoList[i]);
+        };
+    };
+};
+
+export {Project, Inbox};
