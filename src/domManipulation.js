@@ -172,9 +172,26 @@ function writeToDo(toDo) {
     let writeDueDate = document.createElement('input');
     writeDueDate.setAttribute('type', 'date')
     writeDueDate.value = toDo.dueDate;
+    writeDueDate.addEventListener('change', () => {
+        toDo.dueDate = writeDueDate.value;
+    });
 
-    let writePriority = document.createElement('div');
-    writePriority.textContent = toDo.priority;
+    let writePriority = document.createElement('select');
+
+    let priorityOptions = ['Low', 'Normal', 'High']
+
+     for (let i = 0; i < priorityOptions.length; i++) {
+        let option = document.createElement('option');
+        option.value = priorityOptions[i];
+        option.text = priorityOptions[i];
+        writePriority.append(option);
+     };
+
+     writePriority.value = toDo.priority;
+
+     writePriority.addEventListener('change', () => {
+        toDo.priority = writePriority.value;
+     })
     
     let writeNotes = document.createElement('div');
     writeNotes.textContent = toDo.notes;
@@ -182,16 +199,96 @@ function writeToDo(toDo) {
     let writeDone = document.createElement('input');
     writeDone.setAttribute('type', 'checkbox');
     writeDone.checked = toDo.done;
+    writeDone.addEventListener('change', () => {
+        toDo.done = writeDone.checked;
+    });
+
+    let expandButton = document.createElement('button')
+    expandButton.textContent = 'Expand';
+
+    let expandModal = document.createElement('div');
+    expandModal.setAttribute('class', 'modal');
+
+    let modalContent = document.createElement('div');
+
+    function writeModalContent() {
+        modalContent.innerHTML = '';
+
+        let modalTitle = document.createElement('div');
+        modalTitle.textContent = toDo.title;
+        modalTitle.setAttribute('class', 'modalTitle')
+
+        let modalDescription = document.createElement('div');
+        modalDescription.textContent = toDo.description;
+        modalDescription.setAttribute('class', 'modalDescription');
+
+        let modalNotes = document.createElement('div');
+        modalNotes.textContent = toDo.notes;
+        modalNotes.setAttribute('class', 'modalNotes');
+
+        let editButton = document.createElement('button');
+        editButton.textContent = 'Edit';
+        editButton.setAttribute('class', 'editButton');
+        editButton.addEventListener('click', () => {
+            edit()
+        })
+
+        modalContent.append(modalTitle, modalDescription, modalNotes, editButton);
+    }
+    
+    let closeModal = document.createElement('button');
+    closeModal.textContent = 'close';
+    closeModal.setAttribute('class', 'close');
+
+    expandModal.append(closeModal, modalContent);
+
+    expandButton.addEventListener('click', () => {
+        expandModal.style.display = 'block';
+        writeModalContent();
+    });
+
+    closeModal.addEventListener('click', () => {
+        expandModal.style.display = 'none';
+    });
+
+    function edit() {
+
+        modalContent.innerHTML = '';
+
+        let title = document.createElement('input');
+        title.setAttribute('type', 'text');
+        title.value = toDo.title;
+
+        let description = document.createElement('input');
+        description.setAttribute('type', 'text');
+        description.value = toDo.description;
+
+        let notes = document.createElement('textarea');
+        notes.value = toDo.notes;
+
+        let save = document.createElement('button');
+        save.textContent = 'Save';
+        save.addEventListener('click', () => {
+            toDo.title = title.value;
+            toDo.description = description.value;
+            toDo.notes = notes.value;
+            writeModalContent();
+            clearList();
+            toDo.project.writeList();
+        })
+
+        modalContent.append(title, description, notes, save);
+    }
 
     let deleteButton = document.createElement('button')
-    deleteButton.textContent = 'Delete ToDo'
+    deleteButton.textContent = 'Delete ToDo';
     deleteButton.addEventListener('click', () => {
         event.stopPropagation();
         toDo.deleteToDo()
         toDoDiv.remove();
     })
 
-    toDoDiv.append(writeDone, writeTitle, writeDescription, writeDueDate, writePriority, writeNotes, deleteButton);
+    toDoDiv.append(writeDone, writeTitle, writeDescription, writeDueDate, writePriority, writeNotes, expandButton, deleteButton, expandModal);
     container.append(toDoDiv);
 }
 
