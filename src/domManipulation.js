@@ -188,6 +188,8 @@ function writeToDo(toDo) {
     let notes = document.createElement('div');
     notes.textContent = toDo.notes;
 
+    // Modal Generation (Expanded To Do)
+
     let expandButton = document.createElement('button')
     expandButton.textContent = 'Expand';
 
@@ -236,6 +238,8 @@ function writeToDo(toDo) {
         expandModal.style.display = 'none';
     });
 
+    // Only available from expanded ToDo, Allows user to change title, description and add notes
+
     function edit() {
 
         modalContent.innerHTML = '';
@@ -264,6 +268,8 @@ function writeToDo(toDo) {
 
         modalContent.append(title, description, notes, save);
     }
+
+    // Deletes ToDo
 
     let deleteButton = document.createElement('button')
     deleteButton.textContent = 'Delete ToDo';
