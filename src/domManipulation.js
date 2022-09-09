@@ -41,7 +41,7 @@ function writeProject(project) {
 
     projectContainer.append(title);
 
-    if (project.constructor.name != 'Inbox') {
+    if (project.constructor.name == 'Project') {
         let deleteButton = document.createElement('button')
         deleteButton.textContent = 'Delete Project'
         deleteButton.addEventListener('click', () => {
@@ -56,8 +56,6 @@ function writeProject(project) {
     };
 
     sidebar.append(projectContainer);
-    writeHeaders(project)
-    writeToDoButton(project);
     loadProjectFields(); // Should this be called from dom manipulation instead of page load?
 }
 
@@ -154,6 +152,9 @@ function writeToDo(toDo) {
     done.checked = toDo.done;
     done.addEventListener('change', () => {
         toDo.done = done.checked;
+        clearMain()
+        toDo.project.writeToDoList();
+        toDo.project.writeNewToDoButton();
     });
 
     let title = document.createElement('div');
