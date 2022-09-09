@@ -1,11 +1,27 @@
+@font-face {
+    font-family: titleFont;
+    src: url('./titleFont.ttf');
+}
+
+@font-face {
+    font-family: mainFont;
+    src: url('./mainFont.ttf');
+}
+
 body {
     padding: 0px;
     margin: 0px;
+    font-family: 'mainFont';
 }
 
 header {
     height: 80px;
     background-color: #388087;
+    font-family: 'titleFont';
+    font-size: 3em;
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
 }
 
 #centre {
@@ -32,8 +48,9 @@ footer {
 
 .project {
     background-color: #93bcc6;;
-    padding: 20px;
+    padding: 10px;
     border-width: 2px;
+    display: flex;
 }
 
 .project:hover {

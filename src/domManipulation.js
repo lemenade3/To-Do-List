@@ -31,12 +31,21 @@ function writeProject(project) {
     projectContainer.addEventListener('click', () => {
         clearMain();
         project.writeToDoList();
+        if (project.constructor.name == 'Project' || project.constructor.name == 'Inbox')
         project.writeNewToDoButton();
     });
 
     projectFields.remove();
 
-    let title = document.createElement('div');
+    let title
+
+    if (project.constructor.name === 'Project') {
+        title = document.createElement('h4');
+    }
+    if (project.constructor.name != 'Project') {
+        title = document.createElement('h2');
+    }
+
     title.textContent = project.title;
 
     projectContainer.append(title);
@@ -63,10 +72,10 @@ function writeProject(project) {
 
 function writeHeaders(project) {
     let main = document.querySelector('#main');
-    let title = document.createElement('div');
+    let title = document.createElement('h2');
     title.textContent = project.title;
     
-    let description = document.createElement('div');
+    let description = document.createElement('h3');
     description.textContent = project.description;
 
     main.append(title, description);

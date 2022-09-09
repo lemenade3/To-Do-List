@@ -6,6 +6,11 @@ function pageLoad () {
 
     let header = document.createElement('header');
 
+    let pageTitle = document.createElement('div');
+    pageTitle.textContent = 'TASKR';
+
+    header.append(pageTitle);
+
     let centre = document.createElement('div');
     centre.setAttribute('id', 'centre');
 
