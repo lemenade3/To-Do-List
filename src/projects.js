@@ -8,11 +8,11 @@ class Project {
         this.id = title.split(' ').join('');
     };
 
-    writeFields() {
+    writeNewToDoButton() {
         writeToDoButton(this);
     };
 
-    writeList() {
+    writeToDoList() {
         writeHeaders(this)
         for (let i = 0; i < toDoList.length; i++) {
             if (toDoList[i].project === this) {

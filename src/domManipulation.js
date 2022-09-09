@@ -10,37 +10,12 @@ function clearFields() {
     });
 };
 
-// Clears Project containers
+// Clears main section of To-Do's and Project information
 
-function clearList() {
+function clearMain() {
     let main = document.querySelector(`#main`);
     main.innerHTML = ''
 };
-
-function writeInbox(project) {
-    const sidebar = document.querySelector('#sidebar');
-    
-    let projectFields = document.querySelector('#projectFields')
-
-    let projectDiv = document.createElement('div');
-    projectDiv.setAttribute('class', 'project');
-    projectDiv.setAttribute('id', project.id)
-    projectDiv.addEventListener('click', () => {
-        clearList();
-        project.writeList();
-        project.writeFields();
-    });
-
-    let title = document.createElement('div');
-    title.textContent = project.title;
-
-    projectFields.remove();
-    projectDiv.append(title);
-    writeHeaders(project)
-    sidebar.append(projectDiv);
-    writeToDoButton(project);
-    loadProjectFields();
-}
 
 // Writes a project
 
@@ -50,44 +25,53 @@ function writeProject(project) {
     
     let projectFields = document.querySelector('#projectFields')
 
-    let projectDiv = document.createElement('div');
-    projectDiv.setAttribute('class', 'project');
-    projectDiv.setAttribute('id', project.id)
-    projectDiv.addEventListener('click', () => {
-        clearList();
-        project.writeList();
-        project.writeFields();
+    let projectContainer = document.createElement('div');
+    projectContainer.setAttribute('class', 'project');
+    projectContainer.setAttribute('id', project.id)
+    projectContainer.addEventListener('click', () => {
+        clearMain();
+        project.writeToDoList();
+        project.writeNewToDoButton();
     });
+
+    projectFields.remove();
 
     let title = document.createElement('div');
     title.textContent = project.title;
 
-    let deleteButton = document.createElement('button')
-    deleteButton.textContent = 'Delete Project'
-    deleteButton.addEventListener('click', () => {
-        event.stopPropagation()
-        projectDiv.remove();
-        project.deleteProject()
-        clearList();
-    })
+    projectContainer.append(title);
 
-    projectFields.remove();
-    projectDiv.append(title, deleteButton);
+    if (project.constructor.name != 'Inbox') {
+        let deleteButton = document.createElement('button')
+        deleteButton.textContent = 'Delete Project'
+        deleteButton.addEventListener('click', () => {
+            event.stopPropagation()
+            projectContainer.remove();
+            project.deleteProject()
+            clearMain();
+        })
+
+        projectContainer.append(deleteButton);
+
+    };
+
+    sidebar.append(projectContainer);
     writeHeaders(project)
-    sidebar.append(projectDiv);
     writeToDoButton(project);
-    loadProjectFields();
+    loadProjectFields(); // Should this be called from dom manipulation instead of page load?
 }
+
+// Writes the Project Headers that appear in the main section
 
 function writeHeaders(project) {
     let main = document.querySelector('#main');
-    let mainTitle = document.createElement('div');
-    mainTitle.textContent = project.title;
+    let title = document.createElement('div');
+    title.textContent = project.title;
     
     let description = document.createElement('div');
     description.textContent = project.description;
 
-    main.append(mainTitle, description);
+    main.append(title, description);
 }
 
 // Writes button that generates todo fields
@@ -104,16 +88,11 @@ function writeToDoButton(project) {
     main.append(button);
  }
 
+// Makes fields to write in new todo
+
 function writeToDoFields(project) {
-     // To Do Html Fields
 
      let toDoFields = document.createElement('div');
-
-     //Button creates new ToDo
-
-     let newToDo = document.createElement('button');
-     newToDo.textContent = 'Add';
-     newToDo.setAttribute('class', 'newToDo')
 
      let title = document.createElement('input')
      title.setAttribute('type', 'text');
@@ -141,67 +120,73 @@ function writeToDoFields(project) {
         priority.append(option);
      };
 
+     //Button confirms new ToDo and writes new object
+
+     let newToDo = document.createElement('button');
+     newToDo.textContent = 'Add';
+     newToDo.setAttribute('class', 'newToDo')
      newToDo.addEventListener('click', () => {
         let toDo = new ToDo(title.value, description.value, dueDate.value, priority.value, project); // rmeove done from project
-        clearList()
+        clearMain()
         toDo.addToList()
-        toDo.project.writeList();
-        toDo.project.writeFields();
+        toDo.project.writeToDoList();
+        toDo.project.writeNewToDoButton();
     });
  
-    toDoFields.append(newToDo, title, description, dueDate, priority);
+    toDoFields.append(title, description, dueDate, priority, newToDo);
 
-    let container = document.querySelector(`#main`)
-    container.append(toDoFields);
+    let main = document.querySelector(`#main`)
+    main.append(toDoFields);
 };
 
-// Writes a To Do
+// Writes a To Do from the To Do Fields
 
 function writeToDo(toDo) {
-    let container = document.querySelector(`#main`);
+    let main = document.querySelector(`#main`);
 
-    let toDoDiv = document.createElement('div');
-    toDoDiv.setAttribute('class', 'toDo');
+    let toDoContainer = document.createElement('div');
+    toDoContainer.setAttribute('class', 'toDo');
 
-    let writeTitle = document.createElement('div');
-    writeTitle.textContent = toDo.title;
-    
-    let writeDescription = document.createElement('div');
-    writeDescription.textContent = toDo.description;
-    
-    let writeDueDate = document.createElement('input');
-    writeDueDate.setAttribute('type', 'date')
-    writeDueDate.value = toDo.dueDate;
-    writeDueDate.addEventListener('change', () => {
-        toDo.dueDate = writeDueDate.value;
+    // To Do Fields
+
+    let done = document.createElement('input');
+    done.setAttribute('type', 'checkbox');
+    done.checked = toDo.done;
+    done.addEventListener('change', () => {
+        toDo.done = done.checked;
     });
 
-    let writePriority = document.createElement('select');
+    let title = document.createElement('div');
+    title.textContent = toDo.title;
+    
+    let description = document.createElement('div');
+    description.textContent = toDo.description;
+    
+    let dueDate = document.createElement('input');
+    dueDate.setAttribute('type', 'date')
+    dueDate.value = toDo.dueDate;
+    dueDate.addEventListener('change', () => {
+        toDo.dueDate = dueDate.value;
+    });
 
+    let priority = document.createElement('select');
     let priorityOptions = ['Low', 'Normal', 'High']
 
      for (let i = 0; i < priorityOptions.length; i++) {
         let option = document.createElement('option');
         option.value = priorityOptions[i];
         option.text = priorityOptions[i];
-        writePriority.append(option);
+        priority.append(option);
      };
 
-     writePriority.value = toDo.priority;
+     priority.value = toDo.priority;
 
-     writePriority.addEventListener('change', () => {
-        toDo.priority = writePriority.value;
+     priority.addEventListener('change', () => {
+        toDo.priority = priority.value;
      })
     
-    let writeNotes = document.createElement('div');
-    writeNotes.textContent = toDo.notes;
-    
-    let writeDone = document.createElement('input');
-    writeDone.setAttribute('type', 'checkbox');
-    writeDone.checked = toDo.done;
-    writeDone.addEventListener('change', () => {
-        toDo.done = writeDone.checked;
-    });
+    let notes = document.createElement('div');
+    notes.textContent = toDo.notes;
 
     let expandButton = document.createElement('button')
     expandButton.textContent = 'Expand';
@@ -273,8 +258,8 @@ function writeToDo(toDo) {
             toDo.description = description.value;
             toDo.notes = notes.value;
             writeModalContent();
-            clearList();
-            toDo.project.writeList();
+            clearMain();
+            toDo.project.writeToDoList();
         })
 
         modalContent.append(title, description, notes, save);
@@ -285,12 +270,12 @@ function writeToDo(toDo) {
     deleteButton.addEventListener('click', () => {
         event.stopPropagation();
         toDo.deleteToDo()
-        toDoDiv.remove();
+        toDoContainer.remove();
     })
 
-    toDoDiv.append(writeDone, writeTitle, writeDescription, writeDueDate, writePriority, writeNotes, expandButton, deleteButton, expandModal);
-    container.append(toDoDiv);
+    toDoContainer.append(done, title, description, dueDate, priority, notes, expandButton, deleteButton, expandModal);
+    main.append(toDoContainer);
 }
 
 
-export {writeToDo, writeProject, writeInbox, clearFields, clearList, writeToDoButton, writeHeaders};
+export {writeToDo, writeProject, clearFields, clearMain, writeToDoButton, writeHeaders};

@@ -1,5 +1,5 @@
 import { Project } from "./projects";
-import { clearList, clearFields, writeProject } from "./domManipulation";
+import { clearMain, clearFields, writeProject } from "./domManipulation";
 
 function pageLoad () {
     let body = document.querySelector('body');
@@ -58,7 +58,7 @@ function loadProjectFields() {
 
     newProject.addEventListener('click', () => {
         let project = new Project(projectTitleField.value, projectDescriptionField.value);
-        clearList();
+        clearMain();
         clearFields();
         writeProject(project)
     });
