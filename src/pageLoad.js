@@ -1,5 +1,6 @@
 import { Project } from "./projects";
 import { clearMain, clearFields, writeProject } from "./domManipulation";
+import logoImg from './logo.svg';
 
 function pageLoad () {
     let body = document.querySelector('body');
@@ -9,7 +10,10 @@ function pageLoad () {
     let pageTitle = document.createElement('div');
     pageTitle.textContent = 'TASKR';
 
-    header.append(pageTitle);
+    let logo = new Image();
+    logo.src = logoImg;
+
+    header.append(pageTitle, logo);
 
     let centre = document.createElement('div');
     centre.setAttribute('id', 'centre');
@@ -26,8 +30,8 @@ function pageLoad () {
     body.append(header, centre, footer);
 
     loadProjectFields();
-};
 
+};
 
 function loadProjectFields() {
     let sidebar = document.querySelector('#sidebar');

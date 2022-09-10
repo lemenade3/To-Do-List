@@ -3,7 +3,7 @@
 import {pageLoad} from './pageLoad';
 import { writeProject, writeHeaders, writeToDoButton } from './domManipulation';
 import './style.css';
-import { Inbox , Dates, Completed} from './projects';
+import { Project , Inbox , Dates, Completed} from './projects';
 import {isToday, isTomorrow, isThisWeek, isPast} from 'date-fns';
 
 // Calls initial page load
@@ -32,11 +32,19 @@ writeProject(overdue);
 let completed = new Completed('Completed', 'Tasks That Are Marked Complete');
 writeProject(completed);
 
-/* Types of date project
-Today -- isToday
-Tomorrow -- isTomorrow
-This Week -- isThisWeek
-Overdue -- isPast 
+loadProjects();
 
+function loadProjects() {
+    if (localStorage.getItem('projects')) {
+        let projects = window.localStorage.getItem('projects');
+        let parsedList = JSON.parse(projects);
+        for (let i = 0; i < parsedList.length; i++) {
+            let project = new Project(parsedList[i].title, parsedList[i].description)
+            writeProject(project);
+        };
+    }
+};
+
+/*
 use intlFormat Date to display date in todo instead of input, move input to expandModal / if date !valid reject it
 */

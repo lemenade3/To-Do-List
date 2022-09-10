@@ -51,6 +51,7 @@ function writeProject(project) {
     projectContainer.append(title);
 
     if (project.constructor.name == 'Project') {
+        project.storeProject()
         let deleteButton = document.createElement('button')
         deleteButton.textContent = 'Delete Project'
         deleteButton.addEventListener('click', () => {
