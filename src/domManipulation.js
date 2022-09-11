@@ -20,8 +20,6 @@ function clearMain() {
 // Writes a project
 
 function writeProject(project) {
-
-    const sidebar = document.querySelector('#sidebar');
     
     let projectFields = document.querySelector('#projectFields')
 
@@ -65,7 +63,16 @@ function writeProject(project) {
 
     };
 
-    sidebar.append(projectContainer);
+    if (project.constructor.name === 'Project') {
+        let container = document.querySelector('#writtenProjects');
+        container.append(projectContainer);
+    };
+
+    if (project.constructor.name != 'Project') {
+        let container = document.querySelector('#defaultProjects');
+        container.append(projectContainer);
+    };
+
     loadProjectFields(); // Should this be called from dom manipulation instead of page load?
 }
 
@@ -134,11 +141,12 @@ function writeToDoFields(project) {
      newToDo.textContent = 'Add';
      newToDo.setAttribute('class', 'newToDo')
      newToDo.addEventListener('click', () => {
-        let toDo = new ToDo(title.value, description.value, dueDate.value, priority.value, project); // rmeove done from project
+        let toDo = new ToDo(title.value, description.value, dueDate.value, priority.value, project);
         clearMain()
-        toDo.addToList()
+        toDo.storeToDo()
         toDo.project.writeToDoList();
         toDo.project.writeNewToDoButton();
+        console.log(toDo.project)
     });
  
     toDoFields.append(title, description, dueDate, priority, newToDo);
@@ -162,9 +170,8 @@ function writeToDo(toDo) {
     done.checked = toDo.done;
     done.addEventListener('change', () => {
         toDo.done = done.checked;
-        clearMain()
-        toDo.project.writeToDoList();
-        toDo.project.writeNewToDoButton();
+        toDoContainer.remove();
+        toDo.updateStoredList();
     });
 
     let title = document.createElement('div');
@@ -178,6 +185,7 @@ function writeToDo(toDo) {
     dueDate.value = toDo.dueDate;
     dueDate.addEventListener('change', () => {
         toDo.dueDate = dueDate.value;
+        toDo.updateStoredList();
     });
 
     let priority = document.createElement('select');
@@ -275,6 +283,7 @@ function writeToDo(toDo) {
             writeModalContent();
             clearMain();
             toDo.project.writeToDoList();
+            toDo.updateStoredList();
         })
 
         modalContent.append(title, description, notes, save);

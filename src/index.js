@@ -1,10 +1,11 @@
 // Imports from various modules
 
-import {pageLoad} from './pageLoad';
-import { writeProject, writeHeaders, writeToDoButton } from './domManipulation';
+import {loadProjectFields, pageLoad} from './pageLoad';
+import { writeProject, writeHeaders, writeToDoButton, writeToDo } from './domManipulation';
 import './style.css';
-import { Project , Inbox , Dates, Completed} from './projects';
+import { Project , Inbox , Dates, Completed } from './projects';
 import {isToday, isTomorrow, isThisWeek, isPast} from 'date-fns';
+import { ToDo, toDoList } from './toDos'
 
 // Calls initial page load
 
@@ -14,8 +15,6 @@ pageLoad();
 
 let inbox = new Inbox('Inbox', 'All of your outstanding tasks are stored here');
 writeProject(inbox)
-writeHeaders(inbox)
-writeToDoButton(inbox);
 
 let today = new Dates('Today', 'All tasks Due Today', isToday)
 writeProject(today);
@@ -34,6 +33,11 @@ writeProject(completed);
 
 loadProjects();
 
+loadToDos();
+
+inbox.writeToDoList();
+inbox.writeNewToDoButton();
+
 function loadProjects() {
     if (localStorage.getItem('projects')) {
         let projects = window.localStorage.getItem('projects');
@@ -44,6 +48,28 @@ function loadProjects() {
         };
     }
 };
+
+function loadToDos() {
+    if (localStorage.getItem('toDos')) {
+        let toDos = window.localStorage.getItem('toDos');
+        let parsedList = JSON.parse(toDos);
+        for (let i = 0; i < parsedList.length; i++) {
+            if (parsedList[i].project.title === 'Inbox') {
+                Object.setPrototypeOf(parsedList[i].project, Inbox)
+            } else if (parsedList[i].project.title === 'Today' || parsedList[i].project.title === 'Tomorrow' || parsedList[i].project.title === 'This Week' || parsedList[i].project.title === 'Overdue') {
+                Object.setPrototypeOf(parsedList[i].project, Dates)
+            } else if (parsedList[i].project.title === 'Completed') {
+                Object.setPrototypeOf(parsedList[i].project, Completed)
+            } else {
+                Object.setPrototypeOf(parsedList[i].project, Project)
+            }
+            let toDo = new ToDo(parsedList[i].title, parsedList[i].description, parsedList[i].dueDate, parsedList[i].priority, parsedList[i].project, parsedList[i].done, parsedList[i].notes);
+            toDoList.push(toDo);
+        };
+    }
+};
+
+
 
 /*
 use intlFormat Date to display date in todo instead of input, move input to expandModal / if date !valid reject it

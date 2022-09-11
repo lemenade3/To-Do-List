@@ -42,8 +42,9 @@ class Project {
     writeToDoList() {
         writeHeaders(this)
         for (let i = 0; i < toDoList.length; i++) {
-            if (toDoList[i].project === this && toDoList.done == false) {
+            if (toDoList[i].project.title === this.title && toDoList[i].done == false) {
                 writeToDo(toDoList[i])
+                console.log('added!')
             }
         };
     };
@@ -52,7 +53,6 @@ class Project {
         projectList.push(this)
         if (storageAvailable('localStorage')) {
             window.localStorage.setItem('projects', JSON.stringify(projectList));
-            console.log('stored!')
         } 
     }
 
@@ -91,7 +91,7 @@ class Dates extends Project {
         writeHeaders(this);
         for (let i = 0; i < toDoList.length; i++) {
             console.log(toDoList[i].dueDate)
-            if (this.func(new Date(toDoList[i].dueDate))) {
+            if (this.func(new Date(toDoList[i].dueDate)) && toDoList[i].done == false) {
                 writeToDo(toDoList[i]);
             };
         };
@@ -109,4 +109,4 @@ class Completed extends Project {
     };
 };
 
-export {Project, Inbox, Dates, Completed};
+export {Project, Inbox, Dates, Completed, projectList};

@@ -21,6 +21,19 @@ function pageLoad () {
     let sidebar = document.createElement('div');
     sidebar.setAttribute('id', 'sidebar');
 
+    let defaultProjectsContainer = document.createElement('div');
+    defaultProjectsContainer.setAttribute('id', 'defaultProjects')
+
+    let projectsContainer = document.createElement('div');
+    projectsContainer.setAttribute('id', 'writtenProjects')
+
+    let projectsTitle = document.createElement('div');
+    projectsTitle.textContent = 'Projects';
+
+    projectsContainer.append(projectsTitle);
+
+    sidebar.append(defaultProjectsContainer, projectsContainer);
+
     let main = document.createElement('div');
     main.setAttribute('id', 'main');
 
