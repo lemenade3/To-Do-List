@@ -31,9 +31,14 @@ header {
 }
 
 #sidebar {
-    width: 350px;
-    background-color: #BADFE7;
-    height: calc(100vh - 100px);
+    width: 300px;
+    background-color: #bbe1ea;
+    height: max(calc(100vh - 120px), 530px);
+    padding: 10px;
+}
+
+#main {
+    padding: 20px;
 }
 
 footer {
@@ -44,19 +49,48 @@ footer {
 .toDo {
     background-color: #dedecd;
     display: flex;
+    padding: 4px;
 }
 
-.project {
-    background-color: #93bcc6;;
+#defaultProjects,
+#writtenProjects {
+    background-color: #93bcc6;
+    border-radius: 22px;
+    padding: 15px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #888;
+    margin-bottom: 10px;
+}
+
+#defaultProjects > .project {
     padding: 10px;
+    font-size: 1.2em;
+}
+
+#writtenProjects {
+    height: max(calc(100vh - 450px), 200px);
+}
+.project {
+    background-color: #93bcc6;
     border-width: 2px;
     display: flex;
+    font-size: 1.1em;
+    padding: 10px;
+    margin-right: -15px;
 }
 
 .project:hover {
     background-color: #76979f;
 }
 
+#projectsTitle {
+    display: flex;
+    justify-content: center;
+    font-size: 1.5em;
+    background-color: #93bcc6;
+}
+ 
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */

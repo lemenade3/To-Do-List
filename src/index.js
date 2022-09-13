@@ -1,7 +1,7 @@
 // Imports from various modules
 
-import {loadProjectFields, pageLoad} from './pageLoad';
-import { writeProject, writeHeaders, writeToDoButton, writeToDo } from './domManipulation';
+import {pageLoad} from './pageLoad';
+import { writeProject } from './domManipulation';
 import './style.css';
 import { Project , Inbox , Dates, Completed } from './projects';
 import {isToday, isTomorrow, isThisWeek, isPast} from 'date-fns';

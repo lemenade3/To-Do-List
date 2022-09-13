@@ -1,5 +1,6 @@
 import {ToDo} from './toDos'
 import {loadProjectFields} from './pageLoad'
+import { intlFormatDistance, endOfToday } from 'date-fns';
 
 //Clears all inputs
 
@@ -35,14 +36,7 @@ function writeProject(project) {
 
     projectFields.remove();
 
-    let title
-
-    if (project.constructor.name === 'Project') {
-        title = document.createElement('h4');
-    }
-    if (project.constructor.name != 'Project') {
-        title = document.createElement('h2');
-    }
+    let title = document.createElement('div');
 
     title.textContent = project.title;
 
@@ -180,13 +174,8 @@ function writeToDo(toDo) {
     let description = document.createElement('div');
     description.textContent = toDo.description;
     
-    let dueDate = document.createElement('input');
-    dueDate.setAttribute('type', 'date')
-    dueDate.value = toDo.dueDate;
-    dueDate.addEventListener('change', () => {
-        toDo.dueDate = dueDate.value;
-        toDo.updateStoredList();
-    });
+    let dueDate = document.createElement('div');
+    dueDate.textContent = intlFormatDistance(new Date(toDo.dueDate), endOfToday());
 
     let priority = document.createElement('select');
     let priorityOptions = ['Low', 'Normal', 'High']
@@ -202,13 +191,13 @@ function writeToDo(toDo) {
 
      priority.addEventListener('change', () => {
         toDo.priority = priority.value;
+        toDo.updateStoredList();
      })
     
     let notes = document.createElement('div');
     notes.textContent = toDo.notes;
 
     // Modal Generation (Expanded To Do)
-
     let expandButton = document.createElement('button')
     expandButton.textContent = 'Expand';
 
@@ -271,6 +260,23 @@ function writeToDo(toDo) {
         description.setAttribute('type', 'text');
         description.value = toDo.description;
 
+        let dueDate = document.createElement('input');
+        dueDate.setAttribute('type', 'date')
+        dueDate.value = toDo.dueDate;
+            
+
+        let priority = document.createElement('select');
+        let priorityOptions = ['Low', 'Normal', 'High']
+
+        for (let i = 0; i < priorityOptions.length; i++) {
+            let option = document.createElement('option');
+            option.value = priorityOptions[i];
+            option.text = priorityOptions[i];
+            priority.append(option);
+        };
+
+        priority.value = toDo.priority;
+
         let notes = document.createElement('textarea');
         notes.value = toDo.notes;
 
@@ -279,14 +285,16 @@ function writeToDo(toDo) {
         save.addEventListener('click', () => {
             toDo.title = title.value;
             toDo.description = description.value;
+            toDo.dueDate = dueDate.value;
             toDo.notes = notes.value;
+            toDo.priority = priority.value;
             writeModalContent();
             clearMain();
             toDo.project.writeToDoList();
             toDo.updateStoredList();
         })
 
-        modalContent.append(title, description, notes, save);
+        modalContent.append(title, description, dueDate, priority, notes, save);
     }
 
     // Deletes ToDo
@@ -301,6 +309,10 @@ function writeToDo(toDo) {
 
     toDoContainer.append(done, title, description, dueDate, priority, notes, expandButton, deleteButton, expandModal);
     main.append(toDoContainer);
+
+    if (toDo.done) {
+        expandButton.remove()
+    }
 }
 
 

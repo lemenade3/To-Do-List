@@ -3,6 +3,7 @@ import { clearMain, clearFields, writeProject } from "./domManipulation";
 import logoImg from './logo.svg';
 
 function pageLoad () {
+
     let body = document.querySelector('body');
 
     let header = document.createElement('header');
@@ -28,6 +29,7 @@ function pageLoad () {
     projectsContainer.setAttribute('id', 'writtenProjects')
 
     let projectsTitle = document.createElement('div');
+    projectsTitle.setAttribute('id', 'projectsTitle')
     projectsTitle.textContent = 'Projects';
 
     projectsContainer.append(projectsTitle);
@@ -47,42 +49,36 @@ function pageLoad () {
 };
 
 function loadProjectFields() {
-    let sidebar = document.querySelector('#sidebar');
+    let container = document.querySelector('#writtenProjects');
     let projectFields = document.createElement('div');
     projectFields.setAttribute('id', 'projectFields')
 
     let newProject = document.createElement('button');
-    newProject.textContent = 'New Project';
+    newProject.textContent = '+';
     newProject.setAttribute('id', 'newProject');
 
-    let projectTitle = document.createElement('div')
-    let projectTitleLabel = document.createElement('label')
-    projectTitleLabel.setAttribute('for', "#pTitle");
-    projectTitleLabel.textContent = 'Title'
     let projectTitleField = document.createElement('input');
     projectTitleField.setAttribute('type', 'text');
     projectTitleField.setAttribute('id', 'pTitle');
+    projectTitleField.setAttribute('placeholder', 'Project Title...');
 
-    let projectDescription = document.createElement('div')
-    let projectDescriptionLabel = document.createElement('label');
-    projectDescriptionLabel.setAttribute('for', '#pDescription');
-    projectDescriptionLabel.textContent = 'Description';
     let projectDescriptionField = document.createElement('input');
     projectDescriptionField.setAttribute('type', 'text');
     projectDescriptionField.setAttribute('id', 'pDescription');
+    projectDescriptionField.setAttribute('placeholder', 'Project Description...');
 
-    projectTitle.append(projectTitleLabel, projectTitleField)
-    projectDescription.append(projectDescriptionLabel, projectDescriptionField);
 
-    projectFields.append(newProject, projectTitle, projectDescription);
+    projectFields.append(projectTitleField, projectDescriptionField, newProject);
 
-    sidebar.append(projectFields)
+    container.append(projectFields)
 
     newProject.addEventListener('click', () => {
         let project = new Project(projectTitleField.value, projectDescriptionField.value);
         clearMain();
         clearFields();
         writeProject(project)
+        project.writeToDoList();
+        project.writeNewToDoButton();
     });
 }
 
