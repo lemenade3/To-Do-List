@@ -24,6 +24,11 @@ header {
     padding-left: 15px;
 }
 
+button {
+    border: none;
+    height: 30px;
+}
+
 #centre {
     display: flex;
     height: 100%;
@@ -31,7 +36,7 @@ header {
 }
 
 #sidebar {
-    width: 300px;
+    width: 400px;
     background-color: #bbe1ea;
     height: max(calc(100vh - 120px), 530px);
     padding: 10px;
@@ -41,15 +46,49 @@ header {
     padding: 20px;
 }
 
+#pTitle {
+    width: 10px;
+}
+
 footer {
     height: 20px;
     background-color: #388087
 }
 
 .toDo {
-    background-color: #dedecd;
+    background-color: #eeeee3;
     display: flex;
     padding: 4px;
+    width: calc(100vw - 465px);
+}
+
+.toDo > div {
+    margin: 2px;
+}
+
+#newProject:hover {
+    fill: grey;
+}
+
+#projectFields {
+    display: flex;
+    border-radius: 5px;
+    overflow: clip;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #888;
+    margin-top: 5px;
+}
+
+#projectFields > input {
+    background-color: #96c7d4;
+    border-style: none;
+    border-right-style: solid;
+    border-width: 2px;
+    border-color: #76979f;
+    height: 20px;
+    width: 15em;
+    padding: 5px;
 }
 
 #defaultProjects,
@@ -70,6 +109,7 @@ footer {
 
 #writtenProjects {
     height: max(calc(100vh - 450px), 200px);
+    overflow: scroll;
 }
 .project {
     background-color: #93bcc6;
@@ -78,6 +118,8 @@ footer {
     font-size: 1.1em;
     padding: 10px;
     margin-right: -15px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .project:hover {

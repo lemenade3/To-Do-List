@@ -1,6 +1,8 @@
 import { Project } from "./projects";
 import { clearMain, clearFields, writeProject } from "./domManipulation";
-import logoImg from './logo.svg';
+import logoImg from './icons/logo.svg';
+import addProject from './icons/addProject.svg'
+import addProjectHover from './icons/addProjectHover.svg'
 
 function pageLoad () {
 
@@ -53,9 +55,15 @@ function loadProjectFields() {
     let projectFields = document.createElement('div');
     projectFields.setAttribute('id', 'projectFields')
 
-    let newProject = document.createElement('button');
-    newProject.textContent = '+';
+    let newProject = new Image();
+    newProject.src = addProject;
     newProject.setAttribute('id', 'newProject');
+    newProject.addEventListener('mouseover', () => {
+        newProject.src = addProjectHover;
+        newProject.addEventListener('mouseleave', () => {
+            newProject.src = addProject;
+        })
+    })
 
     let projectTitleField = document.createElement('input');
     projectTitleField.setAttribute('type', 'text');
@@ -66,7 +74,6 @@ function loadProjectFields() {
     projectDescriptionField.setAttribute('type', 'text');
     projectDescriptionField.setAttribute('id', 'pDescription');
     projectDescriptionField.setAttribute('placeholder', 'Project Description...');
-
 
     projectFields.append(projectTitleField, projectDescriptionField, newProject);
 

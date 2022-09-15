@@ -1,6 +1,10 @@
 import {ToDo} from './toDos'
 import {loadProjectFields} from './pageLoad'
 import { intlFormatDistance, endOfToday } from 'date-fns';
+import deleteIcon from './icons/delete.svg';
+import deleteIconHover from './icons/deleteHover.svg'
+import expand from './icons/expand.svg'
+import expandHover from './icons/expandHover.svg'
 
 //Clears all inputs
 
@@ -44,13 +48,19 @@ function writeProject(project) {
 
     if (project.constructor.name == 'Project') {
         project.storeProject()
-        let deleteButton = document.createElement('button')
-        deleteButton.textContent = 'Delete Project'
+        let deleteButton = new Image()
+        deleteButton.src = deleteIcon;
         deleteButton.addEventListener('click', () => {
             event.stopPropagation()
             projectContainer.remove();
             project.deleteProject()
             clearMain();
+        })
+        deleteButton.addEventListener('mouseover', () => {
+            deleteButton.src = deleteIconHover;
+            deleteButton.addEventListener('mouseleave', () => {
+                deleteButton.src = deleteIcon;
+            })
         })
 
         projectContainer.append(deleteButton);
@@ -167,18 +177,23 @@ function writeToDo(toDo) {
         toDoContainer.remove();
         toDo.updateStoredList();
     });
+    done.setAttribute('class', 'toDoDone');
 
     let title = document.createElement('div');
     title.textContent = toDo.title;
+    title.setAttribute('class', 'toDoTitle')
     
     let description = document.createElement('div');
     description.textContent = toDo.description;
+    description.setAttribute('class', 'toDoDescription');
     
     let dueDate = document.createElement('div');
     dueDate.textContent = intlFormatDistance(new Date(toDo.dueDate), endOfToday());
+    dueDate.setAttribute('class', 'toDoDue');
 
     let priority = document.createElement('select');
     let priorityOptions = ['Low', 'Normal', 'High']
+    priority.setAttribute('class', 'toDoPriority');
 
      for (let i = 0; i < priorityOptions.length; i++) {
         let option = document.createElement('option');
@@ -193,13 +208,18 @@ function writeToDo(toDo) {
         toDo.priority = priority.value;
         toDo.updateStoredList();
      })
-    
-    let notes = document.createElement('div');
-    notes.textContent = toDo.notes;
 
     // Modal Generation (Expanded To Do)
-    let expandButton = document.createElement('button')
-    expandButton.textContent = 'Expand';
+    let expandButton = new Image();
+    expandButton.src = expand;
+
+    expandButton.addEventListener('mouseover', () => {
+        expandButton.src = expandHover;
+        expandButton.addEventListener('mouseleave', () => {
+            expandButton.src = expand;
+        })
+    })
+
 
     let expandModal = document.createElement('div');
     expandModal.setAttribute('class', 'modal');
@@ -299,15 +319,23 @@ function writeToDo(toDo) {
 
     // Deletes ToDo
 
-    let deleteButton = document.createElement('button')
-    deleteButton.textContent = 'Delete ToDo';
+    let deleteButton = new Image();
+    deleteButton.src = deleteIcon;
     deleteButton.addEventListener('click', () => {
         event.stopPropagation();
         toDo.deleteToDo()
         toDoContainer.remove();
     })
 
-    toDoContainer.append(done, title, description, dueDate, priority, notes, expandButton, deleteButton, expandModal);
+    deleteButton.addEventListener('mouseover', () => {
+        deleteButton.src = deleteIconHover;
+        deleteButton.addEventListener('mouseleave', () => {
+            deleteButton.src = deleteIcon;
+        })
+    })
+
+
+    toDoContainer.append(done, title, description, dueDate, priority, deleteButton, expandButton, expandModal);
     main.append(toDoContainer);
 
     if (toDo.done) {
