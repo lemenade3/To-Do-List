@@ -84,13 +84,34 @@ function writeProject(project) {
 
 function writeHeaders(project) {
     let main = document.querySelector('#main');
-    let title = document.createElement('h2');
-    title.textContent = project.title;
+    let projectTitle = document.createElement('h2');
+    projectTitle.textContent = project.title;
     
-    let description = document.createElement('h3');
-    description.textContent = project.description;
+    let projectDescription = document.createElement('h3');
+    projectDescription.textContent = project.description;
 
-    main.append(title, description);
+    let headers = document.createElement('div');
+    headers.setAttribute('id', 'headers')
+
+    let title = document.createElement('div');
+    title.setAttribute('id', 'titleHeader');
+    title.textContent = 'Title';
+
+    let description = document.createElement('div');
+    description.setAttribute('id', 'descriptionHeader');
+    description.textContent = 'Description';
+
+    let due = document.createElement('div');
+    due.setAttribute('id', 'dueHeader');
+    due.textContent = 'Due';
+
+    let priority = document.createElement('div');
+    priority.setAttribute('id', 'priorityHeader');
+    priority.textContent = 'Priority';
+
+    headers.append(title, description, due, priority);
+
+    main.append(projectTitle, projectDescription, headers);
 }
 
 // Writes button that generates todo fields
@@ -335,7 +356,7 @@ function writeToDo(toDo) {
     })
 
 
-    toDoContainer.append(done, title, description, dueDate, priority, deleteButton, expandButton, expandModal);
+    toDoContainer.append(done, title, description, dueDate, priority, expandButton, deleteButton, expandModal);
     main.append(toDoContainer);
 
     if (toDo.done) {

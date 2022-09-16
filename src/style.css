@@ -36,7 +36,7 @@ button {
 }
 
 #sidebar {
-    width: 400px;
+    width: 330px;
     background-color: #bbe1ea;
     height: max(calc(100vh - 120px), 530px);
     padding: 10px;
@@ -44,6 +44,7 @@ button {
 
 #main {
     padding: 20px;
+    overflow: scroll;
 }
 
 #pTitle {
@@ -55,15 +56,98 @@ footer {
     background-color: #388087
 }
 
+#headers,
+.toDo {
+    display: flex;
+    width: calc(100vw - 465px);
+    min-width: 700px;
+    border-bottom-style: solid;
+    border-color: #888;
+}
+
+select {
+    background-color: #F6F6F2;
+    border-radius: 4px;
+}
+
 .toDo {
     background-color: #eeeee3;
-    display: flex;
     padding: 4px;
-    width: calc(100vw - 465px);
+    flex-shrink: 0;
 }
 
 .toDo > div {
     margin: 2px;
+    border-right-style: solid;
+    border-color: #888;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    position: relative;
+    height: 24px;
+    width: 24px;
+    min-width: 24px;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 2px;
+    border-color: #888;
+    color: #000000;
+}
+
+input[type="checkbox"]::before {
+    content: "✔";
+    position: absolute;
+    font-size: 1.3em;
+    right: 1px;
+    top: -1px;
+    visibility: hidden;
+  }
+
+  input[type="checkbox"]:hover::before {
+    visibility: visible;
+    color: #888;
+    opacity: 0.5;
+}
+
+  input[type="checkbox"]:checked::before {
+    visibility: visible;
+}
+
+.toDoTitle,
+#titleHeader {
+    width: 15vw;
+    min-width: 100px;
+}
+
+#titleHeader {
+    margin: 4px;
+    margin-left: 37px;
+}
+
+.toDoDescription,
+#descriptionHeader {
+    width: 35vw;
+    min-width: 180px;
+}
+
+#dueHeader {
+    margin: 4px;
+}
+
+.toDoDue,
+#dueHeader {
+    width: 8vw;
+    min-width: 70pxpx;
+}
+
+#priorityHeader {
+    margin-right: 57px;
+    margin-left: auto;
+}
+
+.toDoPriority {
+    margin-left: auto;
 }
 
 #newProject:hover {
@@ -87,8 +171,15 @@ footer {
     border-width: 2px;
     border-color: #76979f;
     height: 20px;
-    width: 15em;
     padding: 5px;
+}
+
+#pTitle {
+    width: 6em;
+}
+
+#pDescription {
+    width: 12em
 }
 
 #defaultProjects,
