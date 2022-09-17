@@ -55,3 +55,24 @@ Possibly change entire app logic, most functions should be contained within the 
 ----------
 
 write todo fields should be method in project class, should call dom functions that passes project as the argument. project is then passed to toDo to remove need of activeProject.
+
+----------
+
+The projects should all be added to an array that is then stringified to JSON. every time a new project is generated, the key-value pair is updated. every time a project is deleted the array is updated and restringified.
+
+when the page loads, the app should first look for the project array in json and parse it.
+
+for each of the items in the parsed array. a new project should be generated. and written.
+
+Similar should then take place for each of the todos
+
+---------
+
+standard container for standard projects, project container for other projects, if statements detect if project constructor is Project and append to correct container
+
+---------
+
+Need to style add todo button
+need to add styling to modal
+todo should change colour based on priority
+validation needs to be added to todo fields to ensure all fields are completed
