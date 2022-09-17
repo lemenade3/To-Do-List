@@ -3,7 +3,7 @@
 import {pageLoad} from './pageLoad';
 import { writeProject } from './domManipulation';
 import './style.css';
-import { Project , Inbox , Dates, Completed } from './projects';
+import { Project, Inbox, Dates, Completed, projectList } from './projects';
 import {isToday, isTomorrow, isThisWeek, isPast} from 'date-fns';
 import { ToDo, toDoList } from './toDos'
 
@@ -55,13 +55,12 @@ function loadToDos() {
         let parsedList = JSON.parse(toDos);
         for (let i = 0; i < parsedList.length; i++) {
             if (parsedList[i].project.title === 'Inbox') {
-                Object.setPrototypeOf(parsedList[i].project, Inbox)
-            } else if (parsedList[i].project.title === 'Today' || parsedList[i].project.title === 'Tomorrow' || parsedList[i].project.title === 'This Week' || parsedList[i].project.title === 'Overdue') {
-                Object.setPrototypeOf(parsedList[i].project, Dates)
-            } else if (parsedList[i].project.title === 'Completed') {
-                Object.setPrototypeOf(parsedList[i].project, Completed)
-            } else {
-                Object.setPrototypeOf(parsedList[i].project, Project)
+                parsedList[i].project = inbox
+            } 
+            for (let i = 0; i < projectList.length; i++) {
+                if (projectList[i].title == parsedList[i].project.title) {
+                    parsedList[i].project = projectList[i];
+                }
             }
             let toDo = new ToDo(parsedList[i].title, parsedList[i].description, parsedList[i].dueDate, parsedList[i].priority, parsedList[i].project, parsedList[i].done, parsedList[i].notes);
             toDoList.push(toDo);

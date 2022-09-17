@@ -5,6 +5,14 @@ import deleteIcon from './icons/delete.svg';
 import deleteIconHover from './icons/deleteHover.svg'
 import expand from './icons/expand.svg'
 import expandHover from './icons/expandHover.svg'
+import addTask from './icons/addTask.svg'
+import addTaskHover from './icons/addTaskHover.svg'
+import editIcon from './icons/edit.svg'
+import editHover from './icons/editHover.svg'
+import saveIcon from './icons/save.svg'
+import saveHover from './icons/saveHover.svg'
+import addToDo from './icons/addToDo.svg'
+import addToDoHover from './icons/addToDoHover.svg'
 
 //Clears all inputs
 
@@ -118,14 +126,28 @@ function writeHeaders(project) {
 
 function writeToDoButton(project) {
     let main = document.querySelector('#main')
-    let button = document.createElement('button');
-    button.setAttribute('class', 'writeToDoButton');
+    let button = new Image;
+    button.src = addTask
+    button.setAttribute('id', 'writeToDoButton');
     button.textContent = 'New To Do'
     button.addEventListener('click', () => {
         writeToDoFields(project)
         button.remove();
     })
-    main.append(button);
+
+    let row = document.createElement('div');
+    row.setAttribute('id', 'row');
+
+    button.addEventListener('mouseover', () => {
+        button.src = addTaskHover;
+        button.addEventListener('mouseleave', () => {
+            button.src = addTask;
+        })
+    })
+
+    row.append(button);
+
+    main.append(row);
  }
 
 // Makes fields to write in new todo
@@ -147,6 +169,7 @@ function writeToDoFields(project) {
      let dueDate = document.createElement('input');
      dueDate.setAttribute('type', 'date');
      dueDate.setAttribute('id', 'dueDate');
+     dueDate.valueAsDate = new Date();
  
      let priority = document.createElement('select');
      priority.setAttribute('id', 'priority');
@@ -162,8 +185,8 @@ function writeToDoFields(project) {
 
      //Button confirms new ToDo and writes new object
 
-     let newToDo = document.createElement('button');
-     newToDo.textContent = 'Add';
+     let newToDo = new Image();
+     newToDo.src = addToDo;
      newToDo.setAttribute('class', 'newToDo')
      newToDo.addEventListener('click', () => {
         let toDo = new ToDo(title.value, description.value, dueDate.value, priority.value, project);
@@ -173,11 +196,18 @@ function writeToDoFields(project) {
         toDo.project.writeNewToDoButton();
         console.log(toDo.project)
     });
+
+    newToDo.addEventListener('mouseover', () => {
+        newToDo.src = addToDoHover;
+        newToDo.addEventListener('mouseleave', () => {
+            newToDo.src = addToDo;
+        })
+    })
  
     toDoFields.append(title, description, dueDate, priority, newToDo);
 
-    let main = document.querySelector(`#main`)
-    main.append(toDoFields);
+    let row = document.querySelector(`#row`)
+    row.append(toDoFields);
 };
 
 // Writes a To Do from the To Do Fields
@@ -250,31 +280,69 @@ function writeToDo(toDo) {
     function writeModalContent() {
         modalContent.innerHTML = '';
 
+        let modalTitleHeader = document.createElement('div');
+        modalTitleHeader.textContent = 'Title'
+
         let modalTitle = document.createElement('div');
         modalTitle.textContent = toDo.title;
         modalTitle.setAttribute('class', 'modalTitle')
+
+        let modalDescriptionHeader = document.createElement('div');
+        modalDescriptionHeader.textContent = 'Description'
 
         let modalDescription = document.createElement('div');
         modalDescription.textContent = toDo.description;
         modalDescription.setAttribute('class', 'modalDescription');
 
+        let modalNotesHeader = document.createElement('div');
+        modalNotesHeader.textContent = 'Notes'
+
         let modalNotes = document.createElement('div');
         modalNotes.textContent = toDo.notes;
         modalNotes.setAttribute('class', 'modalNotes');
 
-        let editButton = document.createElement('button');
-        editButton.textContent = 'Edit';
+        let modalDueHeader = document.createElement('div');
+        modalDueHeader.textContent = 'Due Date'
+
+        let modalDueDate = document.createElement('div');
+        modalDueDate.textContent = toDo.dueDate;
+        modalDueDate.setAttribute('class', 'modalDueDate');
+
+        let modalPriorityHeader = document.createElement('div');
+        modalPriorityHeader.textContent = 'Priority';
+
+        let modalPriority = document.createElement('div');
+        modalPriority.textContent = toDo.priority;
+        modalPriority.setAttribute('class', 'modalPriority');
+
+        let editButton = new Image();
+        editButton.src = editIcon;
         editButton.setAttribute('class', 'editButton');
         editButton.addEventListener('click', () => {
             edit()
         })
 
-        modalContent.append(modalTitle, modalDescription, modalNotes, editButton);
+        editButton.addEventListener('mouseover', () => {
+            editButton.src = editHover;
+            editButton.addEventListener('mouseleave', () => {
+                editButton.src = editIcon;
+            })
+        })
+
+        modalContent.append(modalTitleHeader, modalTitle, modalDescriptionHeader, modalDescription, modalNotesHeader, modalNotes, modalDueHeader, modalDueDate, modalPriorityHeader, modalPriority, editButton);
     }
     
-    let closeModal = document.createElement('button');
+    let closeModal = new Image();
+    closeModal.src = deleteIcon
     closeModal.textContent = 'close';
     closeModal.setAttribute('class', 'close');
+
+    closeModal.addEventListener('mouseover', () => {
+        closeModal.src = deleteIconHover;
+        closeModal.addEventListener('mouseleave', () => {
+            closeModal.src = deleteIcon;
+        })
+    })
 
     expandModal.append(closeModal, modalContent);
 
@@ -293,18 +361,32 @@ function writeToDo(toDo) {
 
         modalContent.innerHTML = '';
 
+        let titleHeader = document.createElement('div');
+        titleHeader.textContent = 'Title'
+
         let title = document.createElement('input');
         title.setAttribute('type', 'text');
         title.value = toDo.title;
+        title.setAttribute('class', 'editTitle');
+
+        let descriptionHeader = document.createElement('div');
+        descriptionHeader.textContent = 'Description'
 
         let description = document.createElement('input');
         description.setAttribute('type', 'text');
         description.value = toDo.description;
+        description.setAttribute('class', 'editDescription');
+
+        let dueDateHeader = document.createElement('div');
+        dueDateHeader.textContent = 'Due Date';
 
         let dueDate = document.createElement('input');
         dueDate.setAttribute('type', 'date')
         dueDate.value = toDo.dueDate;
+        dueDate.setAttribute('class', 'editDue')
             
+        let priorityHeader = document.createElement('div');
+        priorityHeader.textContent = 'Priority'
 
         let priority = document.createElement('select');
         let priorityOptions = ['Low', 'Normal', 'High']
@@ -317,12 +399,17 @@ function writeToDo(toDo) {
         };
 
         priority.value = toDo.priority;
+        priority.setAttribute('class', 'editPriority')
+
+        let notesHeader = document.createElement('div');
+        notesHeader.textContent = 'Notes'
 
         let notes = document.createElement('textarea');
         notes.value = toDo.notes;
+        notes.setAttribute('class', 'editNotes');
 
-        let save = document.createElement('button');
-        save.textContent = 'Save';
+        let save = new Image();
+        save.src = saveIcon;
         save.addEventListener('click', () => {
             toDo.title = title.value;
             toDo.description = description.value;
@@ -334,8 +421,16 @@ function writeToDo(toDo) {
             toDo.project.writeToDoList();
             toDo.updateStoredList();
         })
+        save.setAttribute('class', 'save');
 
-        modalContent.append(title, description, dueDate, priority, notes, save);
+        save.addEventListener('mouseover', () => {
+            save.src = saveHover;
+            save.addEventListener('mouseleave', () => {
+                save.src = saveIcon;
+            })
+        })
+
+        modalContent.append(titleHeader, title, descriptionHeader, description, notesHeader, notes, dueDateHeader, dueDate, priorityHeader, priority, save);
     }
 
     // Deletes ToDo
