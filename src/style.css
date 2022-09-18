@@ -44,7 +44,7 @@ button {
 
 #main {
     padding: 20px;
-    overflow: scroll;
+    overflow: auto;
 }
 
 #pTitle {
@@ -239,7 +239,7 @@ input[type="checkbox"]::before {
 
 #writtenProjects {
     height: max(calc(100vh - 450px), 200px);
-    overflow: scroll;
+    overflow: auto;
 }
 .project {
     background-color: #93bcc6;
@@ -267,7 +267,7 @@ input[type="checkbox"]::before {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
-    overflow: auto; /* Enable scroll if needed */
+    overflow: auto; /* Enable auto if needed */
     background-color: #eeeee3; /* 15% from the top and centered */
     padding: 20px;
     border: 2px solid #888;
